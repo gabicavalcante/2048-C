@@ -25,5 +25,6 @@ void desenhe_mapa(int ult_pontuacao, int tamanho_grid) {
 	}
 	for (i = 0; i < tamanho_grid; i++) 
 		printf("------");
-    printf("-\n");
+    printf("-\n"); 
 }
+

@@ -3,6 +3,9 @@
 #include <termios.h>/*             */
 #include <time.h>   /* for rand    */
 #include <unistd.h> /* for getopts */ 
+#include <string.h>
+#include <signal.h>
+#include <stdbool.h>
 #include "carregar_pontos.h"
 #include "salvar_pontos.h"
 #include "mova.h"
@@ -26,18 +29,15 @@
 	 * - Chamamos a função desenhe_mapa(ult_pontuacao, tamanho_grid), que irá desenhar o mapa com a última pontuação e obedecendo o tamanho do grid
 	 * - Depois há o loop que pegará o valor digitado e (a,w,d,s) e chamará a função de mover, passando o sentindo e tamanho do grid;
 	 * - Depois de sair do switch que pega a tecla digitada a função gerar_aleatoriamente() é chamada novamente, depois da matriz ter recebido novos valores, o mapa é desenhado chamando a função desenhe_mapa();
-	 	 A função que gera números aleatórios em C é a rand(). 
-	 * Ela gera números entre 0 e RAND_MAX, onde esse RAND_MAX é um valor que pode variar de máquina pra máquina.
-	 * Pra usar a função rand(), temos que adicionar a biblioteca time.h e para saber o valor de RAND_MAX, temos que usar a função stdlib.h.
-	 * Para que a sequencia não seja sempre a mesma, usamos a função rand() com uma semente, com um número, que é o tempo atual.
-	 * Assim, toda vez que rodarmos o programa, a rand() pega um número de tempo diferente e gera uma seqüencia diferente. 
-	 * Para fazer isso, basta usar a função srand(), que será responsável por alimentar a rand().
-	 *
-	 * calloc é uma função da biblioteca stdlib.h, da linguagem de programação C. 
-	 * Seu objetivo é criar um vetor de tamanho dinâmico, ou seja, definido durante a execução do programa. 
-	 * Difere da função malloc, também de C, pois além de inicializar os espaços de memória ainda atribui o valor 0 (zero) para cada um deles. 
-	 *  útil, pois em C quando se declara um variável o espaço no mapa de memória usado por esta provavelmente contém algum valor lixo.
-	 */
+	 * - Por fim, chamamos salvar_estado() para guardar a pontuação e o estado da matriz;
+
+	 * * A função mover chame 2 outras funções
+	 	- mova: passando a tecla digitada e o tamanho do grid para que os números sejam movidos
+	 	- soma: passando a tecla digitada e o tamanho do grid para que depois dos valores movidos, eles sejam somados
+
+	 * * Função criar_matriz como #define 
+	 	- Essa função foi baseado no código 2048 http://goo.gl/ZkLLoI
+	*/
 
 void mover(int tecla, int tamanho_grid) {
     mova(tecla, tamanho_grid);
@@ -45,14 +45,7 @@ void mover(int tecla, int tamanho_grid) {
     mova(tecla, tamanho_grid);
 }				
 	
-/*  void preencher(int grid, int tamanho) {     																		
-	   int i;                                                                                  
-	   grid = calloc(tamanho, sizeof(*grid));                                                  
-	   for (i = 0; i < tamanho; i++) 														   
-		   grid[i] = calloc(tamanho, sizeof(*grid));									   
-}*/
-
-#define preencher(grid, sz)\
+#define criar_matriz(grid, sz)\
     do {\
         int i;\
         grid = calloc(sz, sizeof(*grid));\
@@ -60,36 +53,48 @@ void mover(int tecla, int tamanho_grid) {
             grid[i] = calloc(sz, sizeof(*grid));\
     } while (0)
 
-int **g;
+int **g; //matriz (alocação dinâmica)
  
-int pontuacao = 0;
+int pontuacao = 0; //pontuação do jogador
 
-char *file = ".ult_pontuacao";
+char *file = ".ult_pontuacao"; //arquivo com a última pontuação
 
-char *file_estado = "historico/.ult_estado";
+char file_estado[50]; //guarda o último estado do jogador
 
-char *file_user = ".user";
+char *file_user = ".user"; //lista os 
+
+typedef struct {
+	char nome[50];
+	int pontos;
+} Jogador;
 
 int main(int argc, char **argv) {  
-		
+
+	Jogador jogador; //jogador criado com base no struct
+
     int tamanho_grid;
 	tamanho_grid = 4;
 	
 	int ult_pontuacao;  
-	preencher(g, tamanho_grid);
-
+	criar_matriz(g, tamanho_grid);
+ 
 	ult_pontuacao = carregar_pontos(ult_pontuacao);
 	enum movimentos { Esquerda = 1, Direita = 2, Cima = 3, Baixo = 4};
 	
 	srand((unsigned)time(NULL)); 
 	 
 	int i = 0; 
-	
-	char jogador[50];
-	jogador = entrada(ult_pontuacao);	
-		
+	char caminho[50] = "historico/";
+
+	entrada(ult_pontuacao, jogador.nome, tamanho_grid);  
+	strcat(file_estado, caminho); //concatenando a string "historico/" com o que tiver no file_estado
+	strcat(file_estado, jogador.nome); //concatenando o string que há em file_estado com o nome do usuário
+									   //correspondendo ao caminho para o arquivo onde há o última estado e última pontuação
+
+	//mando desenhar o mapa, passando a última pontuação e o tamanho definido da tabela
 	desenhe_mapa(ult_pontuacao, tamanho_grid);
     
+    //struct usado para escoder o que for digitado pelo usuário
     struct termios tattr;
     tcgetattr(STDIN_FILENO, &tattr);
     tattr.c_lflag &= ~(ICANON | ECHO);
@@ -98,28 +103,34 @@ int main(int argc, char **argv) {
 	int tecla;
 	
 	while(1) {
-		repita:;   
+		repita:;  //ponto base para retornar logo depois que o usuário digitar algo
         tecla = getchar();
         
         switch (tecla) { 
             case 'a':
+            case 68:
                 mover(Esquerda, tamanho_grid);
                 break; 
             case 'd':
+            case 67:
                 mover(Direita, tamanho_grid);
                 break;
             case 's': 
+            case 66:
                 mover(Baixo, tamanho_grid);
                 break;
             case 'w':
+            case 65:
                 mover(Cima, tamanho_grid);
                 break;
             case 'q':
+            case 64:
                 salvar_pontos(ult_pontuacao, tamanho_grid);
                 exit(EXIT_SUCCESS);
             default:
                 goto repita;
         } 
+        system("clear"); 
         gerar_aleatoriamente(ult_pontuacao, tamanho_grid); 
         desenhe_mapa(ult_pontuacao, tamanho_grid);
         salvar_estado(tamanho_grid);

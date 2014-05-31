@@ -1,18 +1,24 @@
 #include <stdio.h>  
 #include "salvar_estado.h"
 #include "carregar_pontos.h"
+#include "salvar_pontos.h"
 #include "mova.h"  
+#include "carregar_estado.h"
+
+extern char file_estado[50];
 
 void salvar_estado(int tamanho_grid) {
 	int i, j;
-	remove("historico/.ult_estado");
+	remove(file_estado);
 	FILE *fd; 
-	fd = fopen(file_estado, "a");
+	fd = fopen(file_estado, "a"); 
 	for (i = 0; i < tamanho_grid; i ++) {
 		for (j = 0; j < tamanho_grid; j++) {
 			fprintf(fd, "%d ", g[i][j]);
 		}
 		fprintf(fd, "\n");
 	}
+
+	fprintf(fd, "%i\n", pontuacao);
 	fclose(fd); 
-}
+} 

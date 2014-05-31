@@ -1,7 +1,7 @@
 #ifndef __ENTRADA__
 #define __ENTRADA__
 
-char entrada(int ult_pontuacao);
+void entrada(int ult_pontuacao, char* nome, int tamanha_grid);
 
 #endif
 
