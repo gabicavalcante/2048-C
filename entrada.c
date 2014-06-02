@@ -5,6 +5,7 @@
 #include "desenhe_mapa.h"
 #include "recuperar_usuario.h"
 #include "acrescentar_usuario.h"
+#include "copiar.h"
 
 void entrada(int ult_pontuacao, char* nome, int tamanho_grid) { 
 	printf("|-----------------------------------------------|\n");
@@ -23,6 +24,7 @@ void entrada(int ult_pontuacao, char* nome, int tamanho_grid) {
 	printf("\n"); 
 
 	int digito;
+	//scanf("%[^\n]", &digito);
 	scanf("%d", &digito);
 	printf("\n");
 	switch (digito) { 
@@ -34,27 +36,45 @@ void entrada(int ult_pontuacao, char* nome, int tamanho_grid) {
         	printf("|~~~~~~~~~~~~~~~~~Digite seu nome~~~~~~~~~~~~~~~|\n"); 
         	scanf("%s", nome);   
         	acrescentar_usuario(nome); 
+        	strcat(file_estado, nome); //concatenando o string que há em file_estado com o nome do usuário
+									   //correspondendo ao caminho para o arquivo onde há o última estado e última pontuação
+        	
         	int i;
-        	for (i = 0; i < 2; i++) 
+        	for (i = 0; i < 2; i++) {
         		gerar_aleatoriamente(ult_pontuacao, tamanho_grid);
-            
+            }
+            copiar(tamanho_grid);
             break;  
 
         case 2: 
         	printf("|~~~~~~~~~~~~~~~~~Digite seu nome~~~~~~~~~~~~~~~|\n"); 
         	scanf("%s", nome); 
-        	 
+
+        	strcat(file_estado, nome); //concatenando o string que há em file_estado com o nome do usuário
+									   //correspondendo ao caminho para o arquivo onde há o última estado e última pontuação
 			int flag; 
 			recuperar_usuario(nome); 
-			if (!flag) {
-				for (i = 0; i < 2; i++) 
+			if (flag == 0) {
+				for (i = 0; i < 2; i++) {
 					gerar_aleatoriamente(ult_pontuacao, tamanho_grid);
+                }
 			} 
+            copiar(tamanho_grid);
 
             break;
 
         case 3: 
         case 'q': 
+        	/*        	/*printf("Tem certeza que quer sair do jogo? (y/n)\n");
+        	char c;
+        	c = getchar();
+			if ((c == 'y') || (c == 'Y')) {
+ 				exit(EXIT_SUCCESS); 
+ 			}
+ 			else if ((c == 'n') || (c == 'N')) { */
+        	system("clear");
+        	//goto inicio;
+        	//}*/
             exit(EXIT_SUCCESS); 
     } 
 }

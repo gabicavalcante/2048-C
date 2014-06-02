@@ -8,7 +8,6 @@
 #include "carregar_estado.h"
 #include "gerar_aleatoriamente.h"
 
-
 int recuperar_usuario(char* jogador) {
 	FILE *pFile; 
 	char jogador2[50];

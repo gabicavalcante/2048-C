@@ -17,6 +17,8 @@
 #include "entrada.h"
 #include "recuperar_usuario.h"
 #include "carregar_estado.h"
+#include "comparar.h"
+#include "copiar.h"
 
 	/* 
 	 * No main 
@@ -54,7 +56,9 @@ void mover(int tecla, int tamanho_grid) {
     } while (0)
 
 int **g; //matriz (alocação dinâmica)
- 
+
+int **gcopia; //matriz copia da original
+
 int pontuacao = 0; //pontuação do jogador
 
 char *file = ".ult_pontuacao"; //arquivo com a última pontuação
@@ -77,7 +81,8 @@ int main(int argc, char **argv) {
 	
 	int ult_pontuacao;  
 	criar_matriz(g, tamanho_grid);
- 
+ 	criar_matriz(gcopia, tamanho_grid);
+
 	ult_pontuacao = carregar_pontos(ult_pontuacao);
 	enum movimentos { Esquerda = 1, Direita = 2, Cima = 3, Baixo = 4};
 	
@@ -85,12 +90,10 @@ int main(int argc, char **argv) {
 	 
 	int i = 0; 
 	char caminho[50] = "historico/";
+	strcat(file_estado, caminho); //concatenando a string "historico/" com o que tiver no file_estado
 
 	entrada(ult_pontuacao, jogador.nome, tamanho_grid);  
-	strcat(file_estado, caminho); //concatenando a string "historico/" com o que tiver no file_estado
-	strcat(file_estado, jogador.nome); //concatenando o string que há em file_estado com o nome do usuário
-									   //correspondendo ao caminho para o arquivo onde há o última estado e última pontuação
-
+	//printf("%s\n", jogador.nome);
 	//mando desenhar o mapa, passando a última pontuação e o tamanho definido da tabela
 	desenhe_mapa(ult_pontuacao, tamanho_grid);
     
@@ -109,18 +112,22 @@ int main(int argc, char **argv) {
         switch (tecla) { 
             case 'a':
             case 68:
+            	copiar(tamanho_grid);
                 mover(Esquerda, tamanho_grid);
                 break; 
             case 'd':
             case 67:
+            	copiar(tamanho_grid);
                 mover(Direita, tamanho_grid);
                 break;
             case 's': 
             case 66:
+            	copiar(tamanho_grid);
                 mover(Baixo, tamanho_grid);
                 break;
             case 'w':
             case 65:
+            	copiar(tamanho_grid);
                 mover(Cima, tamanho_grid);
                 break;
             case 'q':
@@ -130,8 +137,10 @@ int main(int argc, char **argv) {
             default:
                 goto repita;
         } 
-        system("clear"); 
-        gerar_aleatoriamente(ult_pontuacao, tamanho_grid); 
+        //system("clear"); 
+        if (comparar(tamanho_grid)) {
+        	gerar_aleatoriamente(ult_pontuacao, tamanho_grid); 
+        }
         desenhe_mapa(ult_pontuacao, tamanho_grid);
         salvar_estado(tamanho_grid);
 	} 

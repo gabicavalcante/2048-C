@@ -4,6 +4,7 @@
 /*
 Esse código tem como função somente mover, por isso a ação só é feita enquanto há casas com valor 0 ao lado da casa
 que esta sendo movida.
+A função recebe como parâmetro a tecla digitada e o tamanho do grid.
 */
 
 void mova(int tecla, int tamanho_grid) {
@@ -44,9 +45,9 @@ void mova(int tecla, int tamanho_grid) {
 		int i, j;
 		for (i = 0; i < tamanho_grid; i ++) {
 			for (j = tamanho_grid-1; j > 0; j--) {
-				if (g[i][j]) continue; //verifica se na casa tem algo
+				if (g[i][j]) continue;  
 				int a = 1;
-				while (j - a >= 0 && !g[i][j - a]) a++; //ele diz que o que tem dentro vai ser feito até esbarrar no limite e até se esparrar em um numero
+				while (j - a >= 0 && !g[i][j - a]) a++;  
 				if (j - a >= 0) {
                 g[i][j] = g[i][j - a];
                 g[i][j - a] = 0;

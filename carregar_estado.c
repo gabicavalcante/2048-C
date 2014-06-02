@@ -2,6 +2,7 @@
 #include <stdlib.h>  
 #include <string.h>
 #include "mova.h"  
+#include "entrada.h"                 
 #include "desenhe_mapa.h"
 #include "carregar_estado.h"
 #include "salvar_estado.h" 

@@ -8,8 +8,8 @@ int espaco_esquerda(int tamanho_grid) {
         for (j = 0; j < tamanho_grid; j++) {
             if (!g[i][j]) //verificar se estão vazias
                 return 1;
-            else if (j + 1 < tamanho_grid && ((g[i][j] == g[i][j++]) || (g[j][i] == g[j++][i]))) 
-				return 1;
+            else if (j + 1 < tamanho_grid && i + 1 < tamanho_grid && ((g[i][j] == g[i][j++]) || (g[i][j] == g[i++][j]))) 
+				printf("parei\n"); return 1;
 		}
 	}
     return 0;
