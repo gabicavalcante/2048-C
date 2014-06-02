@@ -3,6 +3,6 @@
 
 extern char *file;
 
-int carregar_pontos (int ult_pontuacao);
+int carregar_pontos (int ult_pontuacao, char* campeao);
 
 #endif

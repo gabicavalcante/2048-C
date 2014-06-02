@@ -3,6 +3,6 @@
 
 extern int pontuacao;
 
-void salvar_pontos(int ult_pontuacao, int tamanho_grid);
+void salvar_pontos(int ult_pontuacao, int tamanho_grid, char* nome);
 
 #endif

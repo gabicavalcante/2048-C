@@ -6,6 +6,11 @@
 #include "carregar_estado.h" 
 #include "acrescentar_usuario.h"
 
+/*
+ * Esta função acrescenta o nome do jogado na lista de jogadores anteriores. Isso vai acontecer se o usuário pedir para começar
+ * um novo jogo:
+ * @param int jogador - nome do jogado atual
+ */
 
 void acrescentar_usuario(char* jogador) {
 	FILE *pFile; 

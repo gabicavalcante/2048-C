@@ -8,6 +8,11 @@
 #include "salvar_estado.h" 
 #include "salvar_pontos.h" 
 
+/*
+ * Esta função carrega o estado do último jogo, tanto a matriz como a pontuação do jogador:
+ * @param int jogador - nome do jogador atual  
+ */
+
 void carregar_estado(char* jogador) {
 	FILE *doc;
 	int i = 0, j = 0, a, b, c, d;   

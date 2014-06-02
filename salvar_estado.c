@@ -5,7 +5,10 @@
 #include "mova.h"  
 #include "carregar_estado.h"
 
-extern char file_estado[50];
+/*
+  * Essa função salva os valores da matriz do jogo e a pontuação alcançada até o ponto
+  * @params int tamanho - variavel com tamanho da tabela
+*/
 
 void salvar_estado(int tamanho_grid) {
 	int i, j;

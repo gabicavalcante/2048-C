@@ -8,6 +8,13 @@
 #include "carregar_estado.h"
 #include "gerar_aleatoriamente.h"
 
+/*
+  * Esse código tem como função verificar se o jogador já utilizou o jogo outras vezes, caso tenha, a função carregar_estado vai ser
+  * chamada para trazer as informações daquele jogador. Caso não seja encontrado registros desse jogador, a função vai escrever na 
+  * lista o nome dele.
+  * @params char* jogador - nome do jogador que esta utilizando o jogo 
+*/
+
 int recuperar_usuario(char* jogador) {
 	FILE *pFile; 
 	char jogador2[50];

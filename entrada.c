@@ -5,7 +5,17 @@
 #include "desenhe_mapa.h"
 #include "recuperar_usuario.h"
 #include "acrescentar_usuario.h"
+#include "gerar_aleatoriamente.h"
 #include "copiar.h"
+
+/*
+ * Esta função funciona como "entrada", imprimindo um menu inicial, com a opção de começar novo jogo, recuperar estado de algum
+ * último jogo, ou sair. Além de pegar o nome do jogador e acrescentar ele na lista de usuário ou recuperar o histórico dele
+ * @param int ult_pontuacao - valor da última maior pontuação
+ * @param char* nome - variável no nome do jogador, como ela é um ponteiro, quando for modificada, a alteração vai permanecer 
+ * fora da função
+ * @param int tamanho_grid - tamanho da matriz do jogo 
+ */
 
 void entrada(int ult_pontuacao, char* nome, int tamanho_grid) { 
 	printf("|-----------------------------------------------|\n");

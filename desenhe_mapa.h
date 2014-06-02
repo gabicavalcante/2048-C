@@ -3,6 +3,6 @@
 
 extern int pontuacao;
 
-void desenhe_mapa(int ult_pontuacao, int tamanho_grid);
+void desenhe_mapa(int ult_pontuacao, int tamanho_grid, char* nome);
 
 #endif

@@ -4,8 +4,7 @@
 #include <time.h>   /* for rand    */
 #include <unistd.h> /* for getopts */ 
 #include <string.h>
-#include <signal.h>
-#include <stdbool.h>
+
 #include "carregar_pontos.h"
 #include "salvar_pontos.h"
 #include "mova.h"
@@ -19,6 +18,7 @@
 #include "carregar_estado.h"
 #include "comparar.h"
 #include "copiar.h"
+#include "voltar_jogada.h"
 
 	/* 
 	 * No main 
@@ -80,10 +80,11 @@ int main(int argc, char **argv) {
 	tamanho_grid = 4;
 	
 	int ult_pontuacao;  
+	char campeao[100];
 	criar_matriz(g, tamanho_grid);
  	criar_matriz(gcopia, tamanho_grid);
 
-	ult_pontuacao = carregar_pontos(ult_pontuacao);
+	ult_pontuacao = carregar_pontos(ult_pontuacao, campeao);
 	enum movimentos { Esquerda = 1, Direita = 2, Cima = 3, Baixo = 4};
 	
 	srand((unsigned)time(NULL)); 
@@ -95,13 +96,14 @@ int main(int argc, char **argv) {
 	entrada(ult_pontuacao, jogador.nome, tamanho_grid);  
 	//printf("%s\n", jogador.nome);
 	//mando desenhar o mapa, passando a última pontuação e o tamanho definido da tabela
-	desenhe_mapa(ult_pontuacao, tamanho_grid);
+	desenhe_mapa(ult_pontuacao, tamanho_grid, campeao);
     
     //struct usado para escoder o que for digitado pelo usuário
-    struct termios tattr;
-    tcgetattr(STDIN_FILENO, &tattr);
-    tattr.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDOUT_FILENO, TCSANOW, &tattr);
+    struct termios tattr; //vc precisa de uma estrutura terminos
+    tcgetattr(STDIN_FILENO, &tattr); //int tcgetattr(int fildes, struct termios *termios_p);
+    //para obter uma cópia de configurações 'termios struct' do tattr atual
+    tattr.c_lflag &= ~(ICANON | ECHO); //atravez do atributo .c_lflag, desabilitamos o buffering e inibimos o eco do teclado para a tela
+    tcsetattr(STDOUT_FILENO, TCSANOW, &tattr); // restaurar o terminal para suas configurações padrão originais
     
 	int tecla;
 	
@@ -130,18 +132,21 @@ int main(int argc, char **argv) {
             	copiar(tamanho_grid);
                 mover(Cima, tamanho_grid);
                 break;
+            case 'r': 
+                voltar_jogada(tamanho_grid);
+                break;
             case 'q':
-            case 64:
-                salvar_pontos(ult_pontuacao, tamanho_grid);
+                salvar_pontos(ult_pontuacao, tamanho_grid, jogador.nome);
                 exit(EXIT_SUCCESS);
             default:
                 goto repita;
         } 
         //system("clear"); 
-        if (comparar(tamanho_grid)) {
+        //sistem(pauser);
+        if (comparar(tamanho_grid)) { 
         	gerar_aleatoriamente(ult_pontuacao, tamanho_grid); 
         }
-        desenhe_mapa(ult_pontuacao, tamanho_grid);
+        desenhe_mapa(ult_pontuacao, tamanho_grid, campeao);
         salvar_estado(tamanho_grid);
 	} 
 }
