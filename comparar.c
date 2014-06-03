@@ -1,7 +1,7 @@
 #include <stdio.h>   
 #include "mova.h"
 #include "copiar.h"
-#include "espaco_esquerda.h"
+#include "validacao.h"
 /*
  * Esta função compara a matriz anterior ao movimento com a resultante 
  * @param int tamanho_grid - tamanho da matriz do jogo 

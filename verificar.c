@@ -4,7 +4,7 @@
 #include "carregar_pontos.h"
 #include "mova.h"
 #include "desenhe_mapa.h"
-#include "espaco_esquerda.h"
+#include "validacao.h"
 
 int verificar(int ult_pontuacao, int tamanho_grid) {
   if (ver_se_ganhou(tamanho_grid)) { 

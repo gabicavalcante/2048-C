@@ -10,7 +10,7 @@
 #include "mova.h"
 #include "soma.h"
 #include "gerar_aleatoriamente.h"
-#include "espaco_esquerda.h" 
+#include "validacao.h" 
 #include "desenhe_mapa.h" 
 #include "salvar_estado.h"
 #include "entrada.h"

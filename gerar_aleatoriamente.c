@@ -4,7 +4,7 @@
 #include "carregar_pontos.h"
 #include "mova.h"
 #include "desenhe_mapa.h"
-#include "espaco_esquerda.h"
+#include "validacao.h"
 
 /*
  * Esta função gera os valores aleatórios para as casas aleatórias.

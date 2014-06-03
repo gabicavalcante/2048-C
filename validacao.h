@@ -1,5 +1,5 @@
-#ifndef __ESPACO_ESQUERDA__
-#define __ESPACO_ESQUERDA__
+#ifndef __VALIDACAO__
+#define __VALIDACAO__
 
 extern int **gtemp; 
 
