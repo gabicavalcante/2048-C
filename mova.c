@@ -23,7 +23,7 @@ void mova(int tecla, int tamanho_grid) {
                 g[i][j + a] = 0;			//essa casa que teve o valor movido recebe 0
                 }
 			}
-		}
+		} 
 	}
 	else if (tecla == 3) {
 		//printf("Cima\n");
@@ -38,7 +38,7 @@ void mova(int tecla, int tamanho_grid) {
                 g[j + a][i] = 0;
                 }
 			}
-		}
+		} 
 	}
 	else if (tecla == 2) {
 		//printf("Direita\n");
@@ -53,7 +53,7 @@ void mova(int tecla, int tamanho_grid) {
                 g[i][j - a] = 0;
                 }
 			}
-		}
+		} 
 	}
 	else if (tecla == 4) {
 		//printf("Baixo\n");
@@ -68,7 +68,6 @@ void mova(int tecla, int tamanho_grid) {
 					g[j - a][i] = 0;
                 }
 			}
-		}
+		} 
 	}
-
 }

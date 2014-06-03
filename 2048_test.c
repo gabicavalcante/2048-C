@@ -19,6 +19,7 @@
 #include "comparar.h"
 #include "copiar.h"
 #include "voltar_jogada.h"
+#include "verificar.h"
 
 	/* 
 	 * No main 
@@ -59,6 +60,8 @@ int **g; //matriz (alocação dinâmica)
 
 int **gcopia; //matriz copia da original
 
+int **gtemp; //matriz copia da original
+
 int pontuacao = 0; //pontuação do jogador
 
 char *file = ".ult_pontuacao"; //arquivo com a última pontuação
@@ -83,12 +86,13 @@ int main(int argc, char **argv) {
 	char campeao[100];
 	criar_matriz(g, tamanho_grid);
  	criar_matriz(gcopia, tamanho_grid);
+    criar_matriz(gtemp, tamanho_grid);
 
 	ult_pontuacao = carregar_pontos(ult_pontuacao, campeao);
 	enum movimentos { Esquerda = 1, Direita = 2, Cima = 3, Baixo = 4};
 	
 	srand((unsigned)time(NULL)); 
-	 
+
 	int i = 0; 
 	char caminho[50] = "historico/";
 	strcat(file_estado, caminho); //concatenando a string "historico/" com o que tiver no file_estado
@@ -114,23 +118,23 @@ int main(int argc, char **argv) {
         switch (tecla) { 
             case 'a':
             case 68:
-            	copiar(tamanho_grid);
-                mover(Esquerda, tamanho_grid);
+            	copiar(tamanho_grid); 
+                mover(Esquerda, tamanho_grid);  
                 break; 
             case 'd':
             case 67:
-            	copiar(tamanho_grid);
-                mover(Direita, tamanho_grid);
+            	copiar(tamanho_grid); 
+                mover(Direita, tamanho_grid);  
                 break;
             case 's': 
             case 66:
-            	copiar(tamanho_grid);
-                mover(Baixo, tamanho_grid);
+            	copiar(tamanho_grid); 
+                mover(Baixo, tamanho_grid);  
                 break;
             case 'w':
             case 65:
-            	copiar(tamanho_grid);
-                mover(Cima, tamanho_grid);
+            	copiar(tamanho_grid); 
+                mover(Cima, tamanho_grid); 
                 break;
             case 'r': 
                 voltar_jogada(tamanho_grid);
@@ -145,8 +149,10 @@ int main(int argc, char **argv) {
         //sistem(pauser);
         if (comparar(tamanho_grid)) { 
         	gerar_aleatoriamente(ult_pontuacao, tamanho_grid); 
-        }
+        } 
+        
         desenhe_mapa(ult_pontuacao, tamanho_grid, campeao);
         salvar_estado(tamanho_grid);
+        verificar(ult_pontuacao, tamanho_grid);
 	} 
 }
