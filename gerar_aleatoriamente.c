@@ -14,8 +14,7 @@
 
 void gerar_aleatoriamente(int ult_pontuacao, int tamanho_grid) {
 	if (conferir_vazio(tamanho_grid)) {
-		int x, y; 
-		printf("01\n");
+		int x, y;  
 		while(g[x = rand() % tamanho_grid][y = rand() % tamanho_grid]); //gerar posições aleatórias até o tamanho limite do grid
 		g[x][y] = (rand() & 3) ? 2 : 4; //aqui, ele vai gerar um número "aleatório", vai fazer um & com o 3 e se for true (111) 
 										//vai imprimir um 2 na casa, e não, será um 4. O & foi feito com o 3 para gerar mais 2 que 4

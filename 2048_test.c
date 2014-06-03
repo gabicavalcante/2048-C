@@ -42,12 +42,14 @@
 	 	- Essa função foi baseado no código 2048 http://goo.gl/ZkLLoI
 	*/
 
+//Funçao que chama a função de movimento e soma dos números
 void mover(int tecla, int tamanho_grid) {
     mova(tecla, tamanho_grid);
     soma(tecla, tamanho_grid);
     mova(tecla, tamanho_grid);
 }				
 	
+
 #define criar_matriz(grid, sz)\
     do {\
         int i;\
@@ -60,7 +62,7 @@ int **g; //matriz (alocação dinâmica)
 
 int **gcopia; //matriz copia da original
 
-int **gtemp; //matriz copia da original
+int **gtemp; //matriz que será usada para guardar os valores da matriz original para que possa ser verificada
 
 int pontuacao = 0; //pontuação do jogador
 
@@ -68,7 +70,7 @@ char *file = ".ult_pontuacao"; //arquivo com a última pontuação
 
 char file_estado[50]; //guarda o último estado do jogador
 
-char *file_user = ".user"; //lista os 
+char *file_user = ".user"; //lista usuário que já jogaram
 
 typedef struct {
 	char nome[50];
@@ -145,7 +147,7 @@ int main(int argc, char **argv) {
             default:
                 goto repita;
         } 
-        //system("clear"); 
+        system("clear"); 
         //sistem(pauser);
         if (comparar(tamanho_grid)) { 
         	gerar_aleatoriamente(ult_pontuacao, tamanho_grid); 

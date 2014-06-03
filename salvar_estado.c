@@ -6,7 +6,7 @@
 #include "carregar_estado.h"
 
 /*
-  * Essa função salva os valores da matriz do jogo e a pontuação alcançada até o ponto
+  * Essa função salva os valores da matriz do jogo e a pontuação alcançada 
   * @params int tamanho - variavel com tamanho da tabela
 */
 
