@@ -2,7 +2,7 @@
 =========
 
 ##Código desenvolvido para o projeto de PRÁTICAS DE TÉCNICAS DE PROGRAMAÇÃO da Universidade Federal do Rio Grande do Norte.
--------------------------------------------------------------------------------------------------------------------------
+
 
 O jogo possui uma entrada em que o usuário escolhe por começar um novo jogo, recuperar um jogo anterior ou sair.
 
