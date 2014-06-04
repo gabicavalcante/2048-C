@@ -8,6 +8,7 @@ O jogo possui uma entrada em que o usuário escolhe por começar um novo jogo, r
 
 1. Caso ele queira começar um novo jogo, e já haja algum registro dele como pontuação e estado do último jogo, eles serão sobrescritos. Se o jogador estiver entrando no jogo pela primeira vez, o nome dele será adicionado na lista de usuário que já usário o 2048, e a pontuação junto com a matriz será salva a cada movimento.
 2. Caso ele queira recuperar um jogo anterior, basta digitar o nome do usuário que usou e o estado será recuperado.
+
 2.1 Caso ele digite um nome ainda não usado, ou seja, sem dados salvos anteriormente, o jogo começará um jogo do início.
 
 Junto com o tabuleiro, o jogo apresenta a melhor última pontuação, junto com o usuário que a conquistou e a pontuação atual do jogador.
